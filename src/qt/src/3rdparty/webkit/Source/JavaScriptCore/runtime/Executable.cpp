@@ -32,11 +32,14 @@
 #include "Parser.h"
 #include "UStringBuilder.h"
 #include "Vector.h"
+#include <iostream>
 
 #if ENABLE(DFG_JIT)
 #include "DFGByteCodeParser.h"
 #include "DFGJITCompiler.h"
 #endif
+
+using namespace std;
 
 namespace JSC {
 
@@ -53,6 +56,9 @@ const ClassInfo EvalExecutable::s_info = { "EvalExecutable", &ScriptExecutable::
 EvalExecutable::EvalExecutable(ExecState* exec, const SourceCode& source, bool inStrictContext)
     : ScriptExecutable(exec->globalData().evalExecutableStructure.get(), exec, source, inStrictContext)
 {
+    /* Pilate Marker */
+    cout << "eval: " << source.toString().utf8().data() << endl;
+
 }
 
 EvalExecutable::~EvalExecutable()

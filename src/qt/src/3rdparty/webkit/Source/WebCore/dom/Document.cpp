@@ -157,6 +157,7 @@
 #include <wtf/PassRefPtr.h>
 #include <wtf/StdLibExtras.h>
 #include <wtf/text/StringBuffer.h>
+#include <iostream>
 
 #if ENABLE(SHARED_WORKERS)
 #include "SharedWorkerRepository.h"
@@ -2222,6 +2223,10 @@ void Document::write(const SegmentedString& text, Document* ownerDocument)
 
     if (!hasInsertionPoint)
         open(ownerDocument);
+
+    /* Pilate Marker */
+    cout << "document.write: " << text.toString().utf8().data() << endl;
+
 
     ASSERT(m_parser);
     m_parser->insert(text);
