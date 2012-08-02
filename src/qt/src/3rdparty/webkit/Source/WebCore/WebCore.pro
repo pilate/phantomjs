@@ -1177,6 +1177,7 @@ SOURCES += \
     rendering/style/StyleSurroundData.cpp \
     rendering/style/StyleTransformData.cpp \
     rendering/style/StyleVisualData.cpp \
+    ../Sandbox/Logger.cpp \
     testing/Internals.cpp \
     xml/DOMParser.cpp \
     xml/XMLHttpRequest.cpp \

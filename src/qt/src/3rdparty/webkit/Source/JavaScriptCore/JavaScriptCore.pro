@@ -198,6 +198,7 @@ SOURCES += \
     runtime/Structure.cpp \
     runtime/TimeoutChecker.cpp \
     runtime/UString.cpp \
+    ../Sandbox/Logger.cpp \
     yarr/YarrJIT.cpp \
 
 *sh4* {

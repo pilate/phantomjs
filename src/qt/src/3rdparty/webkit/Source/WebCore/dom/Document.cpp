@@ -151,6 +151,7 @@
 #include "XMLNSNames.h"
 #include "XMLNames.h"
 #include "htmlediting.h"
+#include <Sandbox/Logger.h>
 #include <wtf/CurrentTime.h>
 #include <wtf/HashFunctions.h>
 #include <wtf/MainThread.h>
@@ -2224,9 +2225,7 @@ void Document::write(const SegmentedString& text, Document* ownerDocument)
     if (!hasInsertionPoint)
         open(ownerDocument);
 
-    /* Pilate Marker */
-    cout << "document.write: " << text.toString().utf8().data() << endl;
-
+    Sandbox::LogEvent("document.write", text.toString().utf8().data()); /* Pilate Marker */
 
     ASSERT(m_parser);
     m_parser->insert(text);

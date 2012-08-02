@@ -32,7 +32,7 @@
 #include "Parser.h"
 #include "UStringBuilder.h"
 #include "Vector.h"
-#include <iostream>
+#include "Sandbox/Logger.h"
 
 #if ENABLE(DFG_JIT)
 #include "DFGByteCodeParser.h"
@@ -56,9 +56,7 @@ const ClassInfo EvalExecutable::s_info = { "EvalExecutable", &ScriptExecutable::
 EvalExecutable::EvalExecutable(ExecState* exec, const SourceCode& source, bool inStrictContext)
     : ScriptExecutable(exec->globalData().evalExecutableStructure.get(), exec, source, inStrictContext)
 {
-    /* Pilate Marker */
-    cout << "eval: " << source.toString().utf8().data() << endl;
-
+    Sandbox::LogEvent("eval", source.toString().utf8().data()); /* Pilate Marker */
 }
 
 EvalExecutable::~EvalExecutable()
