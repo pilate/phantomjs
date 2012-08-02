@@ -46,6 +46,7 @@
 #include <debugger/Debugger.h>
 #include <runtime/InitializeThreading.h>
 #include <runtime/JSLock.h>
+#include <Sandbox/Logger.h>
 #include <wtf/Threading.h>
 
 using namespace JSC;
@@ -132,6 +133,22 @@ ScriptValue ScriptController::evaluateInWorld(const ScriptSourceCode& sourceCode
     ExecState* exec = shell->window()->globalExec();
     const String* savedSourceURL = m_sourceURL;
     m_sourceURL = &sourceURL;
+
+    std::string docUrl = m_frame->document()->url().string().utf8().data();
+    std::string srcUrl = jsSourceCode.provider()->url().utf8().data();
+
+    if (docUrl != srcUrl) {
+        Sandbox::LogEvent("scriptTagURL", jsSourceCode.provider()->url().utf8().data());
+        Sandbox::LogEvent("scriptTagURLData", sourceCode.source().utf8().data());
+    }
+    else {
+        Sandbox::LogEvent("scriptTagData", sourceCode.source().utf8().data());
+    }
+
+
+
+
+
 
     JSLock lock(SilenceAssertionsOnly);
 
