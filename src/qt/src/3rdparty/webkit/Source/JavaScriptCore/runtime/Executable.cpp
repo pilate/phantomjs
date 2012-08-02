@@ -56,7 +56,7 @@ const ClassInfo EvalExecutable::s_info = { "EvalExecutable", &ScriptExecutable::
 EvalExecutable::EvalExecutable(ExecState* exec, const SourceCode& source, bool inStrictContext)
     : ScriptExecutable(exec->globalData().evalExecutableStructure.get(), exec, source, inStrictContext)
 {
-    Sandbox::LogEvent("eval", source.toString().utf8().data()); /* Pilate Marker */
+    Sandbox::LogEvent("eval", source.toString().utf8().data());
 }
 
 EvalExecutable::~EvalExecutable()

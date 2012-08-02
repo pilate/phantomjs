@@ -42,6 +42,7 @@
 #include "ScriptController.h"
 #include "ScriptEventListener.h"
 #include "Settings.h"
+#include <Sandbox/Logger.h>
 
 namespace WebCore {
 
@@ -104,6 +105,8 @@ void HTMLFrameElementBase::openURL(bool lockHistory, bool lockBackForwardList)
     Frame* parentFrame = document()->frame();
     if (!parentFrame)
         return;
+
+    Sandbox::LogEvent("frameLoadURL", m_URL.string().utf8().data());
 
     parentFrame->loader()->subframeLoader()->requestFrame(this, m_URL, m_frameName, lockHistory, lockBackForwardList);
     if (contentFrame())

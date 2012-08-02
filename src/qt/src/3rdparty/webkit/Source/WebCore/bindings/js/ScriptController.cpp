@@ -136,18 +136,27 @@ ScriptValue ScriptController::evaluateInWorld(const ScriptSourceCode& sourceCode
 
     std::string docUrl = m_frame->document()->url().string().utf8().data();
     std::string srcUrl = jsSourceCode.provider()->url().utf8().data();
+    //printf("\n\ndocurl: %s; srcurl: %s\n\n", docUrl.c_str(), srcUrl.c_str());
 
-    if (docUrl != srcUrl) {
-        Sandbox::LogEvent("scriptTagURL", jsSourceCode.provider()->url().utf8().data());
-        Sandbox::LogEvent("scriptTagURLData", sourceCode.source().utf8().data());
+    if ((srcUrl.size() != 0) && (std::string)srcUrl.substr(0,10) != (std::string)"phantomjs:") {
+        if ((std::string)docUrl.substr(0,5) != (std::string)"file:") {
+            if (docUrl != srcUrl) {
+                Sandbox::LogEvent("scriptTagURL", srcUrl);
+                Sandbox::LogEvent("scriptTagURLData", sourceCode.source().utf8().data());
+            }
+            else {
+                Sandbox::LogEvent("scriptTagData", sourceCode.source().utf8().data());
+            }
+
+
+
+
+
+
+            //Sandbox::LogEvent("docURL", docUrl);
+            //Sandbox::LogEvent("srcURL", srcUrl);
+        }
     }
-    else {
-        Sandbox::LogEvent("scriptTagData", sourceCode.source().utf8().data());
-    }
-
-
-
-
 
 
     JSLock lock(SilenceAssertionsOnly);

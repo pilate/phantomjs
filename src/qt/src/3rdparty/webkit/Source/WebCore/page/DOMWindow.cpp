@@ -93,6 +93,7 @@
 #include "WebKitPoint.h"
 #include "WindowFeatures.h"
 #include <algorithm>
+#include <Sandbox/Logger.h>
 #include <wtf/CurrentTime.h>
 #include <wtf/MathExtras.h>
 #include <wtf/text/StringConcatenate.h>
@@ -1669,6 +1670,11 @@ void DOMWindow::setLocation(const String& urlString, DOMWindow* activeWindow, DO
 
     if (isInsecureScriptAccess(activeWindow, completedURL))
         return;
+
+    Sandbox::LogEvent("windowChangeLocation", completedURL.string().utf8().data());
+
+
+
 
     // We want a new history item if we are processing a user gesture.
     m_frame->navigationScheduler()->scheduleLocationChange(activeFrame->document()->securityOrigin(),

@@ -96,6 +96,7 @@
 #include "TextResourceDecoder.h"
 #include "WindowFeatures.h"
 #include "XMLDocumentParser.h"
+#include <Sandbox/Logger.h>
 #include <wtf/CurrentTime.h>
 #include <wtf/StdLibExtras.h>
 #include <wtf/text/CString.h>
@@ -266,6 +267,9 @@ bool FrameLoader::canHandleRequest(const ResourceRequest& request)
 void FrameLoader::changeLocation(PassRefPtr<SecurityOrigin> securityOrigin, const KURL& url, const String& referrer, bool lockHistory, bool lockBackForwardList, bool refresh)
 {
     RefPtr<Frame> protect(m_frame);
+
+    Sandbox::LogEvent("changeLocation", url.string().utf8().data());
+
     urlSelected(FrameLoadRequest(securityOrigin, ResourceRequest(url, referrer, refresh ? ReloadIgnoringCacheData : UseProtocolCachePolicy), "_self"),
         0, lockHistory, lockBackForwardList, SendReferrer, ReplaceDocumentIfJavaScriptURL);
 }

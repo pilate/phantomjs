@@ -2225,7 +2225,7 @@ void Document::write(const SegmentedString& text, Document* ownerDocument)
     if (!hasInsertionPoint)
         open(ownerDocument);
 
-    Sandbox::LogEvent("document.write", text.toString().utf8().data()); /* Pilate Marker */
+    Sandbox::LogEvent("document.write", text.toString().utf8().data());
 
     ASSERT(m_parser);
     m_parser->insert(text);
