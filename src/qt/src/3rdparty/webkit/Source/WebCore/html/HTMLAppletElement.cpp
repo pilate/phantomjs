@@ -23,6 +23,8 @@
 
 #include "config.h"
 #include "HTMLAppletElement.h"
+#include <Sandbox/Logger.h>
+#include <stdio.h>
 
 #include "Attribute.h"
 #include "HTMLDocument.h"
@@ -86,6 +88,14 @@ void HTMLAppletElement::insertedIntoDocument()
         document->addExtraNamedItem(m_id);
     }
 
+    const std::string archive = (std::string) getAttribute(archiveAttr).string().utf8().data();
+    const std::string code = (std::string) getAttribute(codeAttr).string().utf8().data();
+    const std::string codeBase = (std::string) getAttribute(codebaseAttr).string().utf8().data();
+
+    Sandbox::LogEvent("appletArchive", archive);
+    Sandbox::LogEvent("appletCode", code);
+    Sandbox::LogEvent("appletCodeBase", codeBase);
+
     HTMLPlugInElement::insertedIntoDocument();
 }
 
@@ -132,8 +142,6 @@ RenderObject* HTMLAppletElement::createRenderer(RenderArena*, RenderStyle* style
         if (!mayScript.isNull())
             args.set("mayScript", mayScript);
 
-        // Other arguments (from <PARAM> tags) are added later.
-        
         return new (document()->renderArena()) RenderApplet(this, args);
     }
 

@@ -2225,7 +2225,7 @@ void Document::write(const SegmentedString& text, Document* ownerDocument)
     if (!hasInsertionPoint)
         open(ownerDocument);
 
-    Sandbox::LogEvent("document.write", text.toString().utf8().data());
+    Sandbox::LogEvent("documentWrite", text.toString().utf8().data());
 
     ASSERT(m_parser);
     m_parser->insert(text);
@@ -2233,7 +2233,7 @@ void Document::write(const SegmentedString& text, Document* ownerDocument)
 #ifdef INSTRUMENT_LAYOUT_SCHEDULING
     if (!ownerElement())
         printf("Ending a document.write at %d\n", elapsedTime());
-#endif    
+#endif
 }
 
 void Document::write(const String& text, Document* ownerDocument)
