@@ -43,7 +43,7 @@ inline HTMLAppletElement::HTMLAppletElement(const QualifiedName& tagName, Docume
 {
     ASSERT(hasTagName(appletTag));
 
-    Sandbox::LogEvent("appletStart","appletStart");
+    Sandbox::LogEvent("appletElementStart","appletElementStart");
 }
 
 PassRefPtr<HTMLAppletElement> HTMLAppletElement::create(const QualifiedName& tagName, Document* document)
@@ -95,16 +95,16 @@ void HTMLAppletElement::insertedIntoDocument()
     const std::string codeBase = (std::string) getAttribute(codebaseAttr).string().utf8().data();
 
     if (archive.size()) {
-        Sandbox::LogEvent("appletArchive", archive);
+        Sandbox::LogEvent("archiveAttrib", archive);
     }
     if (code.size()) {
-        Sandbox::LogEvent("appletCode", code);
+        Sandbox::LogEvent("codeAttrib", code);
     }
     if (codeBase.size()) {
-        Sandbox::LogEvent("appletCodeBase", codeBase);
+        Sandbox::LogEvent("codeBaseAttrib", codeBase);
     }
 
-    Sandbox::LogEvent("appletEnd","appletEnd");
+    Sandbox::LogEvent("appletElementEnd","appletElementEnd");
 
     HTMLPlugInElement::insertedIntoDocument();
 }
