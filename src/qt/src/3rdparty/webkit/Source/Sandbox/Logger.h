@@ -5,7 +5,8 @@
 #include <string>
 
 namespace Sandbox {
-    void LogEvent(std::string eventname, std::string logdata);
+    void LogEvent(std::string, std::string);
+    void LogEvent(std::string, std::string, std::string);
 }
 
 #endif

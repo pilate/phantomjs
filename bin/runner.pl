@@ -1,6 +1,8 @@
 use MIME::Base64;
 use Data::Dumper::Simple;
 
+use TypeChecks;
+
 use warnings;
 use strict;
 
@@ -28,7 +30,7 @@ my $url = "http://www.google.com";
 if ($ARGV[0]) {
     $url = $ARGV[0];
 }
-print $ARGV[0], "\n";
+print $url, "\n";
 
 my $rawEvents = `./phantomjs test.js $url`;
 
@@ -53,6 +55,8 @@ sub getEventHash {
     return $eventHash;
 }
 
+
+
 # Create final list of events, merge children into parents
 while (my $event = shift(@splitEvents)) {
     my $eventHash = getEventHash($event);
@@ -72,7 +76,7 @@ while (my $event = shift(@splitEvents)) {
         }
         while (substr($childEventHash->{type}, -3) ne "End");
         
-        # Remove 'End' event from children
+        # Remove 'End' event from child list
         pop @children;
 
         # Add children to parent
@@ -81,11 +85,15 @@ while (my $event = shift(@splitEvents)) {
     push @eventList, $eventHash;
 }
 
+# Iterate events, print mapped type
 foreach my $event (@eventList) {
     my $eventType = $event->{type};
     my $mappedType = $eventTypeMap->{$eventType};
     if ($mappedType) {
         print "$eventType - $mappedType\n";
+        if ($mappedType eq "url") {
+            TypeChecks::url($event->{'data'});
+        }
     }
     else {
         print "$eventType\n";
