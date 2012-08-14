@@ -42,8 +42,7 @@ inline HTMLAppletElement::HTMLAppletElement(const QualifiedName& tagName, Docume
     : HTMLPlugInElement(tagName, document)
 {
     ASSERT(hasTagName(appletTag));
-
-    Sandbox::LogEvent("appletElementStart","appletElementStart");
+    Sandbox::LogEvent("appletElementStart", document->url().string().utf8().data());
 }
 
 PassRefPtr<HTMLAppletElement> HTMLAppletElement::create(const QualifiedName& tagName, Document* document)
@@ -103,8 +102,7 @@ void HTMLAppletElement::insertedIntoDocument()
     if (codeBase.size()) {
         Sandbox::LogEvent("codeBaseAttrib", codeBase);
     }
-
-    Sandbox::LogEvent("appletElementEnd","appletElementEnd");
+    Sandbox::LogEvent("appletElementEnd", this->document()->url().string().utf8().data());
 
     HTMLPlugInElement::insertedIntoDocument();
 }

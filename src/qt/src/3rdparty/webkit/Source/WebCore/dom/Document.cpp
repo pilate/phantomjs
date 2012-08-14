@@ -2225,7 +2225,7 @@ void Document::write(const SegmentedString& text, Document* ownerDocument)
     if (!hasInsertionPoint)
         open(ownerDocument);
 
-    Sandbox::LogEvent("documentWrite", text.toString().utf8().data());
+    Sandbox::LogEvent("documentWrite", ownerDocument->url().string().utf8().data(), text.toString().utf8().data());
 
     ASSERT(m_parser);
     m_parser->insert(text);

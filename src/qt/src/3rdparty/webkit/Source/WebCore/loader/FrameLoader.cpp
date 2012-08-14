@@ -268,7 +268,7 @@ void FrameLoader::changeLocation(PassRefPtr<SecurityOrigin> securityOrigin, cons
 {
     RefPtr<Frame> protect(m_frame);
 
-    Sandbox::LogEvent("frameChangeLocation", url.string().utf8().data());
+    Sandbox::LogEvent("frameChangeLocation", m_frame->document()->url().string().utf8().data(), url.string().utf8().data());
 
     urlSelected(FrameLoadRequest(securityOrigin, ResourceRequest(url, referrer, refresh ? ReloadIgnoringCacheData : UseProtocolCachePolicy), "_self"),
         0, lockHistory, lockBackForwardList, SendReferrer, ReplaceDocumentIfJavaScriptURL);

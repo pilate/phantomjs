@@ -106,7 +106,7 @@ void HTMLFrameElementBase::openURL(bool lockHistory, bool lockBackForwardList)
     if (!parentFrame)
         return;
 
-    Sandbox::LogEvent("frameLoadURL", m_URL.string().utf8().data());
+    Sandbox::LogEvent("frameLoadURL", document()->url().string().utf8().data(), m_URL.string().utf8().data());
 
     parentFrame->loader()->subframeLoader()->requestFrame(this, m_URL, m_frameName, lockHistory, lockBackForwardList);
     if (contentFrame())

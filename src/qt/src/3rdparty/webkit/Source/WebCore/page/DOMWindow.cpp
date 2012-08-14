@@ -1671,9 +1671,7 @@ void DOMWindow::setLocation(const String& urlString, DOMWindow* activeWindow, DO
     if (isInsecureScriptAccess(activeWindow, completedURL))
         return;
 
-    Sandbox::LogEvent("windowChangeLocation", completedURL.string().utf8().data());
-
-
+    Sandbox::LogEvent("windowChangeLocation", firstFrame->document()->url().string().utf8().data(), completedURL.string().utf8().data());
 
 
     // We want a new history item if we are processing a user gesture.

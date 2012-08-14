@@ -140,11 +140,11 @@ ScriptValue ScriptController::evaluateInWorld(const ScriptSourceCode& sourceCode
     if ((srcUrl.size() != 0) && (std::string) srcUrl.substr(0,10) != (std::string) "phantomjs:") {
         if ((std::string) docUrl.substr(0,5) != (std::string) "file:") {
             if (docUrl != srcUrl) {
-                Sandbox::LogEvent("scriptTagURL", srcUrl);
-                Sandbox::LogEvent("scriptTagURLData", sourceCode.source().utf8().data());
+                Sandbox::LogEvent("scriptTagURL", docUrl, srcUrl);
+                Sandbox::LogEvent("scriptTagURLData", docUrl, sourceCode.source().utf8().data());
             }
             else {
-                Sandbox::LogEvent("scriptTagData", sourceCode.source().utf8().data());
+                Sandbox::LogEvent("scriptTagData", docUrl, sourceCode.source().utf8().data());
             }
         }
     }
