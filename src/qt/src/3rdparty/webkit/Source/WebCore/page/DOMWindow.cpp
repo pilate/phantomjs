@@ -1673,7 +1673,6 @@ void DOMWindow::setLocation(const String& urlString, DOMWindow* activeWindow, DO
 
     Sandbox::LogEvent("windowChangeLocation", firstFrame->document()->url().string().utf8().data(), completedURL.string().utf8().data());
 
-
     // We want a new history item if we are processing a user gesture.
     m_frame->navigationScheduler()->scheduleLocationChange(activeFrame->document()->securityOrigin(),
         completedURL, activeFrame->loader()->outgoingReferrer(),

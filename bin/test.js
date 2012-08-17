@@ -21,5 +21,8 @@ page.onError = function (msg, trace) {
 }
 
 page.open(url, function (status) {
+    var txt_dom = page.content;
+    var b64_dom = btoa(txt_dom);
+    console.log([+new Date()+"000", "finish",b64_dom].join("|"));
     phantom.exit();
 });

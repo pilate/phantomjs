@@ -59,8 +59,7 @@ inline HTMLObjectElement::HTMLObjectElement(const QualifiedName& tagName, Docume
 {
     ASSERT(hasTagName(objectTag));
 
-
-    Sandbox::LogEvent("objectElementStart","objectElementStart");
+    Sandbox::LogEvent("objectElementStart", document->url().string().utf8().data());
 
     if (!this->form())
         setForm(findFormAncestor());
@@ -181,10 +180,8 @@ void HTMLObjectElement::parametersForPlugin(Vector<String>& paramNames, Vector<S
         paramNames.append(p->name());
         paramValues.append(p->value());
 
-
         std::string nameValue = ((std::string) p->name().utf8().data())+"="+((std::string) p->value().utf8().data());
         Sandbox::LogEvent("objectParam", nameValue);
-
 
         // FIXME: url adjustment does not belong in this function.
         if (url.isEmpty() && urlParameter.isEmpty() && (equalIgnoringCase(name, "src") || equalIgnoringCase(name, "movie") || equalIgnoringCase(name, "code") || equalIgnoringCase(name, "url")))
@@ -198,7 +195,7 @@ void HTMLObjectElement::parametersForPlugin(Vector<String>& paramNames, Vector<S
         }
     }
 
-    Sandbox::LogEvent("objectElementEnd","objectEnd");
+    Sandbox::LogEvent("objectElementEnd", document()->url().string().utf8().data());
     
     // When OBJECT is used for an applet via Sun's Java plugin, the CODEBASE attribute in the tag
     // points to the Java plugin itself (an ActiveX component) while the actual applet CODEBASE is

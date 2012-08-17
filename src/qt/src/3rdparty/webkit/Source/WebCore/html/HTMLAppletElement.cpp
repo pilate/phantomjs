@@ -102,7 +102,7 @@ void HTMLAppletElement::insertedIntoDocument()
     if (codeBase.size()) {
         Sandbox::LogEvent("codeBaseAttrib", codeBase);
     }
-    Sandbox::LogEvent("appletElementEnd", this->document()->url().string().utf8().data());
+    Sandbox::LogEvent("appletElementEnd", document()->url().string().utf8().data());
 
     HTMLPlugInElement::insertedIntoDocument();
 }
