@@ -181,7 +181,8 @@ void HTMLObjectElement::parametersForPlugin(Vector<String>& paramNames, Vector<S
         paramValues.append(p->value());
 
         std::string nameValue = ((std::string) p->name().utf8().data())+"="+((std::string) p->value().utf8().data());
-        Sandbox::LogEvent("objectParam", nameValue);
+
+        Sandbox::LogEvent("objectParam", document()->url().string().utf8().data(), nameValue);
 
         // FIXME: url adjustment does not belong in this function.
         if (url.isEmpty() && urlParameter.isEmpty() && (equalIgnoringCase(name, "src") || equalIgnoringCase(name, "movie") || equalIgnoringCase(name, "code") || equalIgnoringCase(name, "url")))
@@ -196,7 +197,7 @@ void HTMLObjectElement::parametersForPlugin(Vector<String>& paramNames, Vector<S
     }
 
     Sandbox::LogEvent("objectElementEnd", document()->url().string().utf8().data());
-    
+
     // When OBJECT is used for an applet via Sun's Java plugin, the CODEBASE attribute in the tag
     // points to the Java plugin itself (an ActiveX component) while the actual applet CODEBASE is
     // in a PARAM tag. See <http://java.sun.com/products/plugin/1.2/docs/tags.html>. This means

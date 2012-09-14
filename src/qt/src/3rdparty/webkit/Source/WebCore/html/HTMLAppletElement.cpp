@@ -94,13 +94,13 @@ void HTMLAppletElement::insertedIntoDocument()
     const std::string codeBase = (std::string) getAttribute(codebaseAttr).string().utf8().data();
 
     if (archive.size()) {
-        Sandbox::LogEvent("archiveAttrib", archive);
+        Sandbox::LogEvent("archiveAttrib", document()->url().string().utf8().data(), archive);
     }
     if (code.size()) {
-        Sandbox::LogEvent("codeAttrib", code);
+        Sandbox::LogEvent("codeAttrib", document()->url().string().utf8().data(), code);
     }
     if (codeBase.size()) {
-        Sandbox::LogEvent("codeBaseAttrib", codeBase);
+        Sandbox::LogEvent("codeBaseAttrib", document()->url().string().utf8().data(), codeBase);
     }
     Sandbox::LogEvent("appletElementEnd", document()->url().string().utf8().data());
 
