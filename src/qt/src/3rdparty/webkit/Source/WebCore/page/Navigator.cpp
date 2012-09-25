@@ -152,10 +152,14 @@ bool Navigator::cookieEnabled() const
 
 bool Navigator::javaEnabled() const
 {
+    /*
     if (!m_frame || !m_frame->settings())
         return false;
 
     return m_frame->settings()->isJavaEnabled();
+    */
+
+    return true;
 }
 
 Geolocation* Navigator::geolocation() const

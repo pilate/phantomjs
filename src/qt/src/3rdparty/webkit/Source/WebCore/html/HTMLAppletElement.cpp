@@ -42,11 +42,11 @@ inline HTMLAppletElement::HTMLAppletElement(const QualifiedName& tagName, Docume
     : HTMLPlugInElement(tagName, document)
 {
     ASSERT(hasTagName(appletTag));
-    Sandbox::LogEvent("appletElementStart", document->url().string().utf8().data());
 }
 
 PassRefPtr<HTMLAppletElement> HTMLAppletElement::create(const QualifiedName& tagName, Document* document)
 {
+    Sandbox::LogEvent("appletElementStart", document->url().string().utf8().data(), document->url().string().utf8().data());
     return adoptRef(new HTMLAppletElement(tagName, document));
 }
 
@@ -88,21 +88,6 @@ void HTMLAppletElement::insertedIntoDocument()
         document->addNamedItem(m_name);
         document->addExtraNamedItem(m_id);
     }
-
-    const std::string archive = (std::string) getAttribute(archiveAttr).string().utf8().data();
-    const std::string code = (std::string) getAttribute(codeAttr).string().utf8().data();
-    const std::string codeBase = (std::string) getAttribute(codebaseAttr).string().utf8().data();
-
-    if (archive.size()) {
-        Sandbox::LogEvent("archiveAttrib", document()->url().string().utf8().data(), archive);
-    }
-    if (code.size()) {
-        Sandbox::LogEvent("codeAttrib", document()->url().string().utf8().data(), code);
-    }
-    if (codeBase.size()) {
-        Sandbox::LogEvent("codeBaseAttrib", document()->url().string().utf8().data(), codeBase);
-    }
-    Sandbox::LogEvent("appletElementEnd", document()->url().string().utf8().data());
 
     HTMLPlugInElement::insertedIntoDocument();
 }
@@ -152,7 +137,6 @@ RenderObject* HTMLAppletElement::createRenderer(RenderArena*, RenderStyle* style
 
         return new (document()->renderArena()) RenderApplet(this, args);
     }
-
     return RenderObject::createObject(this, style);
 }
 
@@ -192,6 +176,27 @@ void HTMLAppletElement::finishParsingChildren()
 {
     // The parser just reached </applet>, so all the params are available now.
     HTMLPlugInElement::finishParsingChildren();
+
+    const std::string archive = (std::string) getAttribute(archiveAttr).string().utf8().data();
+    const std::string code = (std::string) getAttribute(codeAttr).string().utf8().data();
+    const std::string codeBase = (std::string) getAttribute(codebaseAttr).string().utf8().data();
+    const std::string name = (std::string) getAttribute(nameAttr).string().utf8().data();
+
+    if (name.size()) {
+        Sandbox::LogEvent("nameAttrib", document()->url().string().utf8().data(), name);
+    }
+    if (archive.size()) {
+        Sandbox::LogEvent("archiveAttrib", document()->url().string().utf8().data(), archive);
+    }
+    if (code.size()) {
+        Sandbox::LogEvent("codeAttrib", document()->url().string().utf8().data(), code);
+    }
+    if (codeBase.size()) {
+        Sandbox::LogEvent("codeBaseAttrib", document()->url().string().utf8().data(), codeBase);
+    }
+
+    Sandbox::LogEvent("appletElementEnd", document()->url().string().utf8().data(), document()->url().string().utf8().data());
+
     if (renderer())
         renderer()->setNeedsLayout(true); // This will cause it to create its widget & the Java applet
 }

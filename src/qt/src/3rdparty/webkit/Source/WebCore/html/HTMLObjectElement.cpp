@@ -59,8 +59,6 @@ inline HTMLObjectElement::HTMLObjectElement(const QualifiedName& tagName, Docume
 {
     ASSERT(hasTagName(objectTag));
 
-    Sandbox::LogEvent("objectElementStart", document->url().string().utf8().data());
-
     if (!this->form())
         setForm(findFormAncestor());
     if (this->form())
@@ -75,6 +73,8 @@ inline HTMLObjectElement::~HTMLObjectElement()
 
 PassRefPtr<HTMLObjectElement> HTMLObjectElement::create(const QualifiedName& tagName, Document* document, HTMLFormElement* form, bool createdByParser)
 {
+    Sandbox::LogEvent("objectElementStart", document->url().string().utf8().data(), document->url().string().utf8().data());
+
     return adoptRef(new HTMLObjectElement(tagName, document, form, createdByParser));
 }
 
@@ -180,10 +180,6 @@ void HTMLObjectElement::parametersForPlugin(Vector<String>& paramNames, Vector<S
         paramNames.append(p->name());
         paramValues.append(p->value());
 
-        std::string nameValue = ((std::string) p->name().utf8().data())+"="+((std::string) p->value().utf8().data());
-
-        Sandbox::LogEvent("objectParam", document()->url().string().utf8().data(), nameValue);
-
         // FIXME: url adjustment does not belong in this function.
         if (url.isEmpty() && urlParameter.isEmpty() && (equalIgnoringCase(name, "src") || equalIgnoringCase(name, "movie") || equalIgnoringCase(name, "code") || equalIgnoringCase(name, "url")))
             urlParameter = stripLeadingAndTrailingHTMLSpaces(p->value());
@@ -195,8 +191,6 @@ void HTMLObjectElement::parametersForPlugin(Vector<String>& paramNames, Vector<S
                 serviceType = serviceType.left(pos);
         }
     }
-
-    Sandbox::LogEvent("objectElementEnd", document()->url().string().utf8().data());
 
     // When OBJECT is used for an applet via Sun's Java plugin, the CODEBASE attribute in the tag
     // points to the Java plugin itself (an ActiveX component) while the actual applet CODEBASE is
@@ -313,6 +307,8 @@ void HTMLObjectElement::updateWidget(PluginCreationOption pluginCreationOption)
     Vector<String> paramNames;
     Vector<String> paramValues;
     parametersForPlugin(paramNames, paramValues, url, serviceType);
+
+    Sandbox::LogEvent("objectElementEnd", document()->url().string().utf8().data(), document()->url().string().utf8().data());
 
     // Note: url is modified above by parametersForPlugin.
     if (!allowedToLoadFrameURL(url))

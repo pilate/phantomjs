@@ -272,8 +272,8 @@ EncodedJSValue JSC_HOST_CALL jsNavigatorPrototypeFunctionJavaEnabled(ExecState* 
     JSNavigator* castedThis = static_cast<JSNavigator*>(asObject(thisValue));
     Navigator* imp = static_cast<Navigator*>(castedThis->impl());
 
-
-    JSC::JSValue result = jsBoolean(imp->javaEnabled());
+    //JSC::JSValue result = jsBoolean(imp->javaEnabled());
+    JSC::JSValue result = jsBoolean(true);
     return JSValue::encode(result);
 }
 

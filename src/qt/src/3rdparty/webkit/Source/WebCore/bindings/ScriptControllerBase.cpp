@@ -62,7 +62,6 @@ ScriptValue ScriptController::executeScript(const ScriptSourceCode& sourceCode)
     RefPtr<Frame> protect(m_frame); // Script execution can destroy the frame, and thus the ScriptController.
 
     ScriptValue result = evaluate(sourceCode);
-
     if (!wasInExecuteScript) {
         m_inExecuteScript = false;
         Document::updateStyleForAllDocuments();

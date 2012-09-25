@@ -23,6 +23,9 @@
 #include "config.h"
 #include "HTMLParamElement.h"
 
+#include <Sandbox/Logger.h>
+#include <string>
+
 #include "Attribute.h"
 #include "Document.h"
 #include "HTMLNames.h"
@@ -61,6 +64,12 @@ void HTMLParamElement::parseMappedAttribute(Attribute* attr)
         m_value = attr->value();
     } else
         HTMLElement::parseMappedAttribute(attr);
+
+    if (!m_value.isEmpty() && !m_name.isEmpty()) {
+        std::string nameValue = ((std::string) m_name.string().utf8().data()) + "=" + ((std::string) m_value.string().utf8().data());
+        Sandbox::LogEvent("param", document()->url().string().utf8().data(), nameValue);
+    }
+
 }
 
 bool HTMLParamElement::isURLAttribute(Attribute* attr) const
