@@ -2,7 +2,6 @@
 *.pro.user*
 *.xcodeproj
 Makefile*
-bin/phantomjs
 *~
 *.moc
 moc_*
