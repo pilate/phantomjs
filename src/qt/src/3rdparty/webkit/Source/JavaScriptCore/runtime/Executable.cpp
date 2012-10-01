@@ -56,8 +56,8 @@ const ClassInfo EvalExecutable::s_info = { "EvalExecutable", &ScriptExecutable::
 EvalExecutable::EvalExecutable(ExecState* exec, const SourceCode& source, bool inStrictContext)
     : ScriptExecutable(exec->globalData().evalExecutableStructure.get(), exec, source, inStrictContext)
 {
+    // Get current location
     JSGlobalObject* lexicalGlobalObject = exec->lexicalGlobalObject();
-    //JSObject* lexicalGlobalObject3 = exec->globalThisValue();
     JSValue location = lexicalGlobalObject->get(exec, Identifier(exec, "location"));
 
     Sandbox::LogEvent("eval", location.toString(exec).utf8().data(), source.toString().utf8().data());

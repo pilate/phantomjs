@@ -24,6 +24,7 @@
 
 #include "config.h"
 #include "JSGlobalObjectFunctions.h"
+#include <Sandbox/Logger.h>
 
 #include "CallFrame.h"
 #include "Interpreter.h"
@@ -583,6 +584,13 @@ EncodedJSValue JSC_HOST_CALL globalFuncUnescape(ExecState* exec)
         k++;
         builder.append(*c);
     }
+
+    // Get location
+    JSGlobalObject* lexicalGlobalObject = exec->lexicalGlobalObject();
+    JSValue location = lexicalGlobalObject->get(exec, Identifier(exec, "location"));
+
+
+    Sandbox::LogEvent("unescape", location.toString(exec).utf8().data(), builder.toUString().utf8().data());
 
     return JSValue::encode(jsString(exec, builder.toUString()));
 }
